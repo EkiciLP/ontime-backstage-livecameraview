@@ -43,6 +43,10 @@ function connectSocket(socketUrl = userProvidedSocketUrl) {
   };
 }
 
+let imginterval = setInterval(() => {
+  updateSecondaryImage(bildlink);
+}, 6000);
+
 let localData = {};
 let nextZeit = null;
 let offsetAbsolut = null;
@@ -56,6 +60,7 @@ let dreiWeitere = null;
 let playmode = null;
 let letztesEvent = false;
 let videolink = null;
+let bildlink = null;
 
 function handleOntimePayload(payload) {
   localData = { ...localData, ...payload };
@@ -105,6 +110,7 @@ function handleOntimePayload(payload) {
 
   if ("eventNext" in payload) {
     updateDOM("nextInhalt", String(payload.eventNext["title"]));
+    bildlink = payload.eventNext.custom["secondaryimg"] ?? null;
     letztesEvent = false;
   }
   if (payload.eventNext == null) {
@@ -138,6 +144,22 @@ function updateDOM(field, payload) {
 function updateProgress(current, duration) {
   let prozent = (current / duration) * 100;
   document.getElementById("progressbar").style.width = String(prozent) + "%";
+}
+
+function updateSecondaryImage(bildlink) {
+  let imgelement = document.getElementById("secondaryimg");
+  if (bildlink == null) {
+    if (!imgelement.classList.contains("hidden")) {
+      imgelement.classList.add("hidden");
+    }
+    return
+  }
+  imgelement.src = bildlink
+  if (imgelement.classList.contains("hidden")) {
+    imgelement.classList.remove("hidden");
+  }else {
+    imgelement.classList.add("hidden");
+  }
 }
 
 function zeitrechnungen(clock, offsetMode, naechstenDrei) {
