@@ -16,10 +16,9 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1.2fr;
   grid-template-rows: 1fr repeat(6, 6fr);
-  grid-column-gap: 16px;
-  grid-row-gap: 16px;
-  width: 97%;
-  height: 97%;
+  gap: 16px;
+  width: 98%;
+  height: 98%;
 }
 
 /* .uhr, */
@@ -29,7 +28,7 @@ body {
 .next,
 .eins,
 .zwei,
-.drei,
+.note,
 .vier,
 .gruppe {
   background: rgba(255, 255, 255, 0.07);
@@ -67,12 +66,11 @@ body {
 }
 
 .aktuell {
-  grid-area: 2 / 1 / 4 / 3;
+  grid-area: 2 / 1 / 3 / 3;
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 0.1fr 1fr;
-  grid-column-gap: 16px;
-  grid-row-gap: 16px;
+  grid-template-columns: 2fr;
+  grid-template-rows: 1fr 9fr;
+  gap: 16px;
 }
 
 .progress {
@@ -91,7 +89,6 @@ body {
   grid-area: 2 / 1 / 3 / 2;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr 0.3fr;
   grid-column-gap: 16px;
   grid-row-gap: 16px;
   padding: 16px;
@@ -108,7 +105,7 @@ body {
   background-color: #101010;
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: -6px;
   width: 100%;
   margin: 0;
 }
@@ -191,7 +188,7 @@ body {
 }
 
 .video {
-  grid-area: 4 / 1 / 8 / 3;
+  grid-area: 3 / 1 / 8 / 3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -211,14 +208,14 @@ body {
   margin-right: auto;
   /* margin-bottom: 10%; */
   object-fit: contain;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
 }
 
 #videoplayer > iframe {
   width: 100%;
   height: 100%;
   border: none;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.07);
 }
 
 .next {
@@ -233,18 +230,18 @@ body {
   grid-area: 4 / 3 / 5 / 4;
 }
 
-.drei {
-  grid-area: 5 / 3 / 6 / 4;
+.note {
+  grid-area: 5 / 3 / 7 / 4;
 }
 
 .next,
 .eins,
 .zwei,
-.drei,
+.note,
 .gruppe {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 0.3fr 1fr;
+  grid-template-rows: 0.2fr 2fr;
   grid-column-gap: 16px;
   grid-row-gap: 2px;
   padding: 16px;
@@ -271,6 +268,7 @@ body {
 .cardName {
   grid-area: 2 / 1 / 3 / 4;
   font-size: 2.4vh;
+  padding: 8px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;

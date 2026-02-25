@@ -56,11 +56,12 @@ let gruppeBis = null;
 let gruppeSeit = null;
 let rundown = null;
 let aktPosition = null;
-let dreiWeitere = null;
+let zweiWeitere = null;
 let playmode = null;
 let letztesEvent = false;
 let videolink = null;
 let bildlink = null;
+let noteInhalt = null;
 
 function handleOntimePayload(payload) {
   localData = { ...localData, ...payload };
@@ -111,6 +112,8 @@ function handleOntimePayload(payload) {
   if ("eventNext" in payload) {
     updateDOM("nextInhalt", String(payload.eventNext["title"]));
     bildlink = payload.eventNext.custom["secondaryimg"] ?? null;
+    noteInhalt = payload.eventNext.custom["backstagenote"] ?? "--";
+    updateDOM("noteInhalt", String(noteInhalt))
     letztesEvent = false;
   }
   if (payload.eventNext == null) {
@@ -129,8 +132,8 @@ function handleOntimePayload(payload) {
   }
 
   if (playmode != "stop") {
-    if (rundown) dreiWeitere = naechsteDreiEvents(rundown || {}, aktPosition);
-    zeitrechnungen(payload.clock, offsetMode, dreiWeitere || []);
+    if (rundown) zweiWeitere = naechsteEvents(rundown || {}, aktPosition, 2);
+    zeitrechnungen(payload.clock, offsetMode, zweiWeitere || []);
   }
 }
 
@@ -263,7 +266,7 @@ async function getData(url) {
   return await response.json();
 }
 
-function naechsteDreiEvents(rundown, aktPosition, anzahl = 3) {
+function naechsteEvents(rundown, aktPosition, anzahl = 3) {
   return rundown.flatOrder
     .map((id) => rundown.entries[id])
     .slice(rundown.flatOrder.indexOf(aktPosition))
