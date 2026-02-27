@@ -4,8 +4,8 @@ This project implements a stream in an ontime backstage view.
 For this to work, you must copy the folder to Ontime's external folder and create a custom field named ‘videourl’ in the Ontime project.
 
 ### Custom Fields
-- **backstagenote**: The Note for the field on the bottom left (always takes the next event)
-- **secondaryimg**: The Image display in an alternating manner on the video area (alwaays takes the next event)
+- **backstage_***: any field with this prefix will be added to the notes section (always takes the next event)
+- **secondaryimg**: The Image display in an alternating manner on the video area (always takes the next event)
 
 ## Third-Party Licenses
 
