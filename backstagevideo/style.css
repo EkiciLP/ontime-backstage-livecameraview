@@ -296,6 +296,7 @@ body {
 
 .notes-container {
   grid-area: 2 / 1 / 3 / 4;
+  overflow: hidden;
 }
 
 .notes-item {
