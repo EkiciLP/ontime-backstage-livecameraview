@@ -111,10 +111,12 @@ function handleOntimePayload(payload) {
 
   if ("eventNext" in payload) {
     updateDOM("nextInhalt", String(payload.eventNext["title"]));
-    bildlink = payload.eventNext.custom["secondaryimg"] ?? null;
-    noteInhalt = payload.eventNext.custom["backstagenote"] ?? "--";
-    updateDOM("noteInhalt", String(noteInhalt))
+    bildlink = payload.eventNext.custom["secondaryimg"] ?? "";
+    const entries = Object.entries(payload.eventNext.custom);
+    const notes = entries.filter((key, value) => String(key).startsWith("backstage_"));
+    addNotes("notescontainer", notes);
     letztesEvent = false;
+
   }
   if (payload.eventNext == null) {
     // nextZeit = null;
@@ -151,7 +153,7 @@ function updateProgress(current, duration) {
 
 function updateSecondaryImage(bildlink) {
   let imgelement = document.getElementById("secondaryimg");
-  if (bildlink == null) {
+  if (!bildlink) {
     if (!imgelement.classList.contains("hidden")) {
       imgelement.classList.add("hidden");
     }
@@ -163,6 +165,30 @@ function updateSecondaryImage(bildlink) {
   }else {
     imgelement.classList.add("hidden");
   }
+}
+
+async function addNotes(noteselement, notes) {
+  let container = document.getElementById(noteselement);
+  let customFields = await getData("/data/custom-fields");
+  container.innerHTML = ""
+  notes.forEach((note) => {
+    const label = String(note[0]).replace("backstage_", "");
+    const itemRow = document.createElement('div');
+    itemRow.classList.add('notes-item');
+
+    const labelSpan = document.createElement('span');
+    labelSpan.classList.add('notes-label');
+    labelSpan.textContent = label;
+    
+    labelSpan.style.backgroundColor = customFields[note[0]].colour;
+
+    const valueSpan = document.createElement('span');
+    valueSpan.textContent = note[1];
+
+    itemRow.appendChild(labelSpan);
+    itemRow.appendChild(valueSpan);
+    container.appendChild(itemRow);
+  });
 }
 
 function zeitrechnungen(clock, offsetMode, naechstenDrei) {
