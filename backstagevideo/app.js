@@ -167,6 +167,14 @@ function updateSecondaryImage(bildlink) {
   }
 }
 
+function updateLogos(imagelink) {
+  let logosmall = document.getElementById("logoimage");
+  let logobackgrounmd = document.getElementById("backgroundlogo");
+
+  logosmall.src = imagelink;
+  logobackgrounmd.src = imagelink;
+}
+
 async function addNotes(noteselement, notes) {
   let container = document.getElementById(noteselement);
   let customFields = await getData("/data/custom-fields");
@@ -273,6 +281,7 @@ async function htttpGETladen() {
   rundown = await getData("/data/rundowns/current");
   let projekt = await getData("/data/project");
   updateDOM("projektTitel", projekt.title);
+  updateLogos(`/user/logo/${projekt.logo}`)
   const videoProjekt = projekt.custom.find(
     item => item.title === "videourl"
   )?.value;
